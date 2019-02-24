@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BpGitHub</string>
+    <string name="repositories_title">GitHub Repos</string>
+    <string name="repo_name">Name</string>
+    <string name="repo_full_name">Full Name</string>
+    <string name="forks_count">Forks count</string>
+    <string name="stargazers">Stargazers</string>
+    <string name="size">Size</string>
+</resources>

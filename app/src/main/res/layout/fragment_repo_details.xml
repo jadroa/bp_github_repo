@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="viewModel" type="click.jaromil.bpgithub.viewmodel.RepositoriesViewModel"/>
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:fitsSystemWindows="true"
+             tools:context=".view.RepoActivity">
+
+        <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:fitsSystemWindows="true">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/collapsing_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:statusBarScrim="#42000000"
+                    app:titleEnabled="false">
+
+                <ImageView
+                        android:id="@+id/image"
+                        android:layout_width="match_parent"
+                        android:layout_height="210dp"
+                        android:tint="#60000000"
+                        android:scaleType="centerCrop"
+                        android:fitsSystemWindows="true"
+                        app:layout_collapseMode="parallax"
+                        android:src="@drawable/panda"/>
+
+                <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:layout_collapseMode="pin" />
+
+                <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="210dp"
+                        app:layout_collapseMode="parallax">
+
+                    <TextView
+                            android:id="@+id/forks_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginBottom="28dp"
+                            android:layout_marginLeft="@dimen/item_left_margin"
+                            android:text="@string/forks_count"/>
+
+                    <TextView
+                            android:id="@+id/forks_count_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/forks_count"
+                            android:layout_marginBottom="28dp"
+                            android:layout_marginLeft="@dimen/item_left_margin"
+                            android:text="@{Integer.toString(viewModel.currentRepo.forksCount)}"/>
+
+                    <TextView
+                            android:id="@+id/stargazers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toTopOf="@+id/forks_count"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginBottom="@dimen/item_bottom_margin"
+                            android:layout_marginLeft="@dimen/item_left_margin"
+                            android:text="@string/stargazers"/>
+
+                    <TextView
+                            android:id="@+id/stargazers_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toTopOf="@+id/forks_count"
+                            app:layout_constraintStart_toEndOf="@id/stargazers"
+                            android:layout_marginBottom="@dimen/item_bottom_margin"
+                            android:layout_marginLeft="@dimen/item_left_margin"
+                            android:text="@{Integer.toString(viewModel.currentRepo.stargazersCount)}"/>
+
+                    <TextView
+                            android:id="@+id/size"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toTopOf="@+id/stargazers"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginBottom="@dimen/item_bottom_margin"
+                            android:layout_marginLeft="@dimen/item_left_margin"
+                            android:text="@string/size"/>
+
+                    <TextView
+                            android:id="@+id/size_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toTopOf="@+id/stargazers"
+                            app:layout_constraintStart_toEndOf="@id/size"
+                            android:layout_marginBottom="@dimen/item_bottom_margin"
+                            android:layout_marginLeft="@dimen/item_left_margin"
+                            android:text="@{Integer.toString(viewModel.currentRepo.size)}"/>
+
+                    <TextView
+                            android:id="@+id/size_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toTopOf="@+id/stargazers"
+                            app:layout_constraintStart_toEndOf="@id/size_value"
+                            android:layout_marginBottom="@dimen/item_bottom_margin"
+                            android:layout_marginLeft="@dimen/item_left_margin"
+                            android:text="kB"/>
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:refreshing="@{viewModel.isLoading}">
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/contributors_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical"
+                    app:items="@{viewModel.contributorItems}"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>
